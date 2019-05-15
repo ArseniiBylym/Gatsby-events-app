@@ -7,47 +7,29 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql } from 'gatsby';
 import styled from 'styled-components';
 import GlobalStyle from '../styles/global.style';
 import Header from './header';
 
 const LayoutWrapper = styled.div`
-    margin: 0 auto;
-    max-width: 960px;
-    padding: 0px 1.0875rem 1.45rem;
+    margin: 0 0;
     padding-top: 0;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    main {
+        width: 100%;
+        height: 100%;
+    }
 `;
 
 const Layout = ({ children }) => {
-    const data = useStaticQuery(graphql`
-        query SiteTitleQuery {
-            site {
-                siteMetadata {
-                    title
-                    author
-                }
-            }
-        }
-    `);
-
     return (
-        <>
-            <Header siteTitle={data.site.siteMetadata.title} />
+        <LayoutWrapper>
             <GlobalStyle />
-            <LayoutWrapper>
-                <main>{children}</main>
-                <footer>
-                    © {new Date().getFullYear()}, Built by{' '}
-                    <a href={`mailto:${data.site.siteMetadata.author}`}>
-                        {data.site.siteMetadata.author}
-                    </a>{' '}
-                    with
-                    {` `}
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                </footer>
-            </LayoutWrapper>
-        </>
+            <Header />
+            <main>{children}</main>
+        </LayoutWrapper>
     );
 };
 

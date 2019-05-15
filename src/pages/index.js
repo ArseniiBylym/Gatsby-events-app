@@ -1,31 +1,51 @@
 import React from 'react';
-import { Link } from 'gatsby';
+import {useStaticQuery, graphql, Link } from 'gatsby';
 import styled from 'styled-components';
+import Img from 'gatsby-image';
 
 import Layout from '../components/layout';
-import Image from '../components/image';
+import Footer from '../components/footer';
 import SEO from '../components/seo';
 
 const IndexPageWrapper = styled.div`
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
     .image-wrapper {
-        max-width: 300px;
-        margin-bottom: 1.45rem;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
     }
 `;
 
-const IndexPage = () => (
-    <IndexPageWrapper>
-        <Layout>
-            <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-            <h1>Hi people</h1>
-            <p>Welcome to your new Gatsby site.</p>
-            <p>Now go build something great.</p>
-            <div className="image-wrapper">
-                <Image />
-            </div>
-            <Link to="/page-2/">Go to page 2</Link>
-        </Layout>
-    </IndexPageWrapper>
-);
+const IndexPage = () => {
+    const data = useStaticQuery(graphql`
+        query {
+            placeholderImage: file(relativePath: { regex: "/main-bg/" }) {
+                childImageSharp {
+                    fluid(maxWidth: 1920) {
+                        ...GatsbyImageSharpFluid
+                    }
+                }
+            }
+        }
+    `);
+
+    return (
+        <IndexPageWrapper>
+            <Layout>
+                <SEO
+                    title="Home"
+                    keywords={[`gatsby`, `application`, `react`]}
+                />
+                <div className="image-wrapper">
+                    <Img fluid={data.placeholderImage.childImageSharp.fluid} style={{position: 'static'}}/>
+                </div>
+                <Footer />
+            </Layout>
+        </IndexPageWrapper>
+    );
+};
 
 export default IndexPage;

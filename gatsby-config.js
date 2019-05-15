@@ -3,15 +3,41 @@ module.exports = {
     title: `Events`,
     description: `List of the future and passed events`,
     author: `arseniibylym@gmail.com`,
+    company: {
+      adress: 'Ukrain, Kyiv',
+      email: 'events@gmailcom',
+      facebook: 'https://facebook.com/events',
+      viber: '+380971234567'
+    }
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
     {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 1280,
+            }
+          }
+        ]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `eventlist`,
+        path: `${__dirname}/src/eventList`,
       },
     },
     `gatsby-transformer-sharp`,
